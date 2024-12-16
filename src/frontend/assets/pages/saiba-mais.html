@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/veiculos.css">
+    <link rel="shortcut icon" href="../img/DN.png" type="image/x-icon" />
+    <title>DriveNShop</title>
+    <script
+      src="https://kit.fontawesome.com/f584623432.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <!--       --------Header part---------         -->
+    <div class="header">
+      <div class="center-header">
+        <a href="../../index.html" class="arrow"
+          ><i class="fa-solid fa-arrow-left"></i
+        ></a>
+      </div>
+    </div>
+    
+    <h1 style="margin: 3rem 5rem;">Saiba Mais</h1>
+
+    <main style="padding: 0 10rem">
+      <h2 style="color: var(--primary-color); margin-bottom: 1rem;">Indicadores de Desempenho</h2>
+
+      <table class="indicadores" style="margin-left: 1rem; margin-top: 2.5rem; width: 50%; border-collapse: collapse;">
+        <thead>
+          <tr>
+            <th style="border: none; padding: 8px; text-align: left;">Indicador</th>
+            <th style="border: none; padding: 8px; text-align: left;">Valor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="border: 1px solid #ccc; padding: 8px;">Avaliação Média de Satisfação (<i class="fa fa-star"></i>)</td>
+            <td style="border: 1px solid #ccc; padding: 8px;">
+              <span id="media-feedback"></span>
+            </td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #ccc; padding: 8px;">Percentual de Veículos com Propostas (%)</td>
+            <td style="border: 1px solid #ccc; padding: 8px;">
+              <span id="percentual-veiculos"></span>
+            </td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #ccc; padding: 8px;">Média de Propostas por Veículo (N°)</td>
+            <td style="border: 1px solid #ccc; padding: 8px;">
+              <span id="media-propostas"></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>      
+    </main>
+    <script type="module">
+      import veiculoService from "../services/veiculo.js";
+      import feedbackService from "../services/feedback.js";
+      import propostaService from "../services/proposta.js";
+
+      const mediaFeedback = document.getElementById("media-feedback");
+      const percentualVeiculos = document.getElementById("percentual-veiculos");
+      const mediaPropostas = document.getElementById("media-propostas");
+
+      const indicadores = async () => {
+        const feedbacks = await feedbackService.getFeedbacks();
+        const propostas = await propostaService.getPropostas();
+        const veiculos = await veiculoService.getVeiculos();
+
+        if (feedbacks.length > 0) {
+          const sum = feedbacks.reduce((total, element) => total + element.avaliacao, 0);
+          const media = sum / feedbacks.length;
+          mediaFeedback.textContent = media.toFixed(1);
+        } else {
+          mediaFeedback.textContent = "Sem feedbacks disponíveis.";
+        }
+
+        if (veiculos.length > 0) {
+          const veiculosComPropostas = veiculos.filter((veiculo) => propostas.some((proposta) => proposta.id_veiculo === veiculo.id));
+          const percentual = (veiculosComPropostas.length / veiculos.length) * 100;
+          percentualVeiculos.textContent = percentual;
+        } else {
+          percentualVeiculos.textContent = "Sem veículos disponíveis.";
+        }
+
+        if (veiculos.length > 0) {
+          const mediaProposta = propostas.length / veiculos.length;
+          mediaPropostas.textContent = mediaProposta.toFixed(1);
+        } else {
+          mediaPropostas.textContent = "Sem veículos disponíveis.";
+        }
+      };
+
+      indicadores();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+cff-version: 1.1.1
+message: Transformando o Mercado Automotivo Brasileiro com Inovação e Segurança.
+title: "DriveNShop"
+authors:
+  - family-names: Oliveira
+    given-names: Vinicius
+  - family-names: Allan
+    given-names: Kayque
+  - family-names: Sousa
+    given-names: Lucas
+  - family-names: Vinícius
+    given-names: Davi
+  - family-names: Mendes
+    given-names: Kaio
+  - family-names: Zegarra
+    given-names: Vinicius
+  - name-suffix: Professor
+    family-names: Amaral Baroni de Carvalho
+    given-names: Juliana
+  - name-suffix: Professor
+    family-names: Alonso Veloso
+    given-names: Eveline
+  - name-suffix: Professor
+    family-names: Norberta de Brito
+    given-names: Aline
+keywords:
+  - DriveNShop
+  - Marketplace
+  - Compra e venda de veículos
+  - Segurança
+
+repository-code: https://github.com/seu-usuario/DriveNShop
+license: CC-BY-4.0
+version: 1.1.1
+date-released: 2024-12-01
